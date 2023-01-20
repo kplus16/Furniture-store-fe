@@ -10,8 +10,9 @@ export default function Navbar() {
         </ul>
         <ul className='grid-item'>
             <CustomLink to="/search">Search</CustomLink>
-            <CustomLink to="/login">Login</CustomLink>
             <CustomLink to="/cart">Cart</CustomLink>
+            <CustomLink to="/users/login">Login</CustomLink>
+            <CustomLink to="/users/signup">Signup</CustomLink>
         </ul>
     </nav>)
 }
