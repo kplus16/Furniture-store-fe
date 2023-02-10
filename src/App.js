@@ -1,6 +1,5 @@
 import './App.css';
-import axios from 'axios';
-import Navbar from './Navbar';
+import Navbar from './components/Navbar';
 import Pricing from './pages/Pricing';
 import Home from './pages/Home';
 import About from './pages/About';
@@ -8,9 +7,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { Route, Routes} from "react-router-dom";
 
-const api = axios.create({
-  baseURL: 'http://localhost:3010/'
-})
+
 
 function App() {
   return (

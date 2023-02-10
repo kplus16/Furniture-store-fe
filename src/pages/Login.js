@@ -1,8 +1,8 @@
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useRef, useState, useEffect, useContext} from 'react';
 import AuthContext from '../context/AuthProvider';
 
-//import axios base url
+//import axios base url and create url to fetch from backend
 import axios from '../api/axios';
 const LOGIN_URL = '/user/login';
 
@@ -38,7 +38,7 @@ const Login = () => {
                 {email : user, password : pwd}
             );
             //console.log(JSON.stringify(response?.data));
-            console.log(JSON.stringify(response?.data));
+            console.log(response?.data);
             const accessToken = response?.data?.accessToken;
             const roles = response?.data?.userType;
             // const firstName = response?.data?.firstName;
@@ -47,6 +47,9 @@ const Login = () => {
             setUser('');
             setPwd('');
             setSuccess(true);
+            setTimeout(() => {
+                navigate("/")
+            }, 2000)
         } catch (error) {
             if(!error?.response){
                 setErrMsg('No Server Response');
@@ -63,17 +66,19 @@ const Login = () => {
 
     return (
         <> {success ?(
-            <div>
+            <div className='center-success'>
                 <h1>You are logged in!</h1>
-                <button type="button" onClick={() => {
+                {/* <h4>Redirecting!</h4> */}
+                {/* <button type="button" onClick={() => {
                     navigate("/")
-                }}>Signup</button>
+                }}>Signup</button> */}
             </div>
         ) : (
-            <div>
-                <p ref={errRef} className={errMsg ? "errmsg" : "offscreed"} aria-live="assertive">{errMsg}</p>
+            <div className='center'>
+                <p ref={errRef} className={errMsg ? "errmsg error-message" : "offscreed"} aria-live="assertive">{errMsg}</p>
                 <h1>Sign In</h1>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className='loginForm'>
+                <div className='txt_field'>
                     <label htmlFor='email'>Email:</label>
                     <input 
                         type="text" 
@@ -86,22 +91,27 @@ const Login = () => {
                         required
                     >
                     </input> 
-                    <label htmlFor='password'>Password:</label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        placeholder="Password"
-                        autoComplete = "off"
-                        onChange={(e) => setPwd(e.target.value)}
-                        value = {pwd}
-                        required
-                    >
-                    </input> 
-                    <button>Sign In</button>
+                </div>
+                    <div className='txt_field'>
+                        <label htmlFor='password'>Password:</label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            placeholder="Password"
+                            autoComplete = "off"
+                            onChange={(e) => setPwd(e.target.value)}
+                            value = {pwd}
+                            required
+                        >
+                        </input> 
+                    </div>
+                    <button className='btn-sign-in'>
+                        Sign In
+                    </button>
+                    <div className='signup-link'>
+                        Not a member? <Link to="/users/signup">Signup</Link>
+                    </div>
                 </form>
-                <button type="button" onClick={() => {
-                    navigate("/signup")
-                }}>Signup</button>
             </div>
         )}
     

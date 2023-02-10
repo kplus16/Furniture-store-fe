@@ -1,18 +1,21 @@
 import React from 'react';
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
+
+
+
 export default function Navbar() {
     
     return (<nav className="nav">
-        <Link to="/" className="site-title">Furnifun</Link>
+        <Link to="/" className="site-title">Furnication</Link>
         <ul className='grid-item'>
+            <CustomLink to="/search">Search</CustomLink>
             <CustomLink to="/pricing">Products</CustomLink>
             <CustomLink to="/about">About</CustomLink>
         </ul>
         <ul className='grid-item'>
-            <CustomLink to="/search">Search</CustomLink>
-            <CustomLink to="/cart">Cart</CustomLink>
             <CustomLink to="/users/login">Login</CustomLink>
             <CustomLink to="/users/signup">Signup</CustomLink>
+            <CustomLink to="/cart">Cart</CustomLink>
         </ul>
     </nav>)
 }
