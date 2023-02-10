@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useRef, useState, useEffect, useContext} from 'react';
 import AuthContext from '../context/AuthProvider';
+import { motion } from "framer-motion"
 
 //import axios base url and create url to fetch from backend
 import axios from '../api/axios';
@@ -66,15 +67,25 @@ const Login = () => {
 
     return (
         <> {success ?(
-            <div className='center-success'>
+            <motion.div 
+                className='center-success'
+                initial={{opacity: 0}}
+                animate={{opacity: 1}}
+                exit={{opacity: 0}}
+            >
                 <h1>You are logged in!</h1>
                 {/* <h4>Redirecting!</h4> */}
                 {/* <button type="button" onClick={() => {
                     navigate("/")
                 }}>Signup</button> */}
-            </div>
+            </motion.div>
         ) : (
-            <div className='center'>
+            <motion.div 
+                className='center'
+                initial={{opacity: 0}}
+                animate={{opacity: 1}}
+                exit={{opacity: 0}}
+            >
                 <p ref={errRef} className={errMsg ? "errmsg error-message" : "offscreed"} aria-live="assertive">{errMsg}</p>
                 <h1>Sign In</h1>
                 <form onSubmit={handleSubmit} className='loginForm'>
@@ -112,7 +123,7 @@ const Login = () => {
                         Not a member? <Link to="/users/signup">Signup</Link>
                     </div>
                 </form>
-            </div>
+            </motion.div>
         )}
     
     </>

@@ -1,11 +1,16 @@
 import { Link, useNavigate } from 'react-router-dom'
-
+import { motion } from "framer-motion"
 
 
 export default function Signup(){
     const navigate = useNavigate();
     return (
-        <div className="center">
+        <motion.div 
+            className="center"
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            exit={{opacity: 0}}
+        >
             <h1>Signup Here!</h1>
             <form>
                 <label htmlFor="email">Email: </label>
@@ -28,6 +33,6 @@ export default function Signup(){
                         Already have an account? <Link to="/users/login">Login</Link>
                 </div>
             </form>
-        </div>
+        </motion.div>
     )
 }
