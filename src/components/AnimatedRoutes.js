@@ -1,5 +1,5 @@
 import React from "react";
-import Pricing from '../pages/Pricing';
+import Pricing from '../pages/Products';
 import Home from '../pages/Home';
 import About from '../pages/About';
 import Login from '../pages/Login';

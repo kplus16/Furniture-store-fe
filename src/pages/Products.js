@@ -1,4 +1,6 @@
 import { motion } from "framer-motion"
+import "@google/model-viewer";
+import Couch from "../assets/objects/Couch.glb";
 
 export default function Pricing(){
     
@@ -10,7 +12,11 @@ export default function Pricing(){
             animate={{opacity: 1}}
             exit={{opacity: 0}}
             >
-                <h1>Pricing</h1>
+                <h1>Products</h1>
+                <model-viewer
+                    src={Couch} 
+                    camera-controls
+                ></model-viewer>
         </motion.div>
     )
 }

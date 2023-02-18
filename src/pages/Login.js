@@ -1,14 +1,17 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useRef, useState, useEffect, useContext} from 'react';
-import AuthContext from '../context/AuthProvider';
 import { motion } from "framer-motion"
+
+//import context
+import { UserContext } from '../context/UserContext';
 
 //import axios base url and create url to fetch from backend
 import axios from '../api/axios';
 const LOGIN_URL = '/user/login';
 
 const Login = () => {
-    const { setAuth } = useContext(AuthContext);
+
+    const { setUser } = useContext(UserContext);
 
     //signup navigation
     const navigate = useNavigate()
@@ -17,10 +20,10 @@ const Login = () => {
     const errRef = useRef();
 
     //react state
-    const [user, setUser] = useState('');
+    const [userEmail, setUserEmail] = useState('');
     const [pwd, setPwd] = useState('');
     const [ errMsg, setErrMsg ] = useState('');
-    const [success, setSuccess] = useState(false);
+    const [ success, setSuccess ] = useState(false);
 
     useEffect(() => {
         userRef.current.focus();
@@ -28,24 +31,23 @@ const Login = () => {
 
     useEffect(() => {
         setErrMsg('')
-    }, [user, pwd])
+    }, [userEmail, pwd])
 
     //what to do on form submit
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
         try {
             const response = await axios.post(LOGIN_URL, 
-                {email : user, password : pwd}
+                {email : userEmail, password : pwd}
             );
             //console.log(JSON.stringify(response?.data));
             console.log(response?.data);
             const accessToken = response?.data?.accessToken;
             const roles = response?.data?.userType;
-            // const firstName = response?.data?.firstName;
-            // const lastName = response?.data?.lastName;
-            setAuth({ user, pwd, roles, accessToken })
-            setUser('');
+            setUser(response?.data?.email)
+            localStorage.setItem('accessToken', accessToken)
+            //setUser(userEmail);
+            setUserEmail('');
             setPwd('');
             setSuccess(true);
             setTimeout(() => {
@@ -55,9 +57,9 @@ const Login = () => {
             if(!error?.response){
                 setErrMsg('No Server Response');
             }else if (error.response?.status === 400) {
-                setErrMsg('Missing Username or Password');
+                setErrMsg('User not found on database');
             }else if (error.response?.status === 401) {
-                setErrMsg('Unauthorized');
+                setErrMsg('Incorrect Password');
             }else{
                 setErrMsg('Login Failed');
             }
@@ -74,20 +76,16 @@ const Login = () => {
                 exit={{opacity: 0}}
             >
                 <h1>You are logged in!</h1>
-                {/* <h4>Redirecting!</h4> */}
-                {/* <button type="button" onClick={() => {
-                    navigate("/")
-                }}>Signup</button> */}
             </motion.div>
         ) : (
             <motion.div 
-                className='center'
+                className='center login'
                 initial={{opacity: 0}}
                 animate={{opacity: 1}}
                 exit={{opacity: 0}}
             >
-                <p ref={errRef} className={errMsg ? "errmsg error-message" : "offscreed"} aria-live="assertive">{errMsg}</p>
                 <h1>Sign In</h1>
+                <p ref={errRef} className={errMsg ? "errmsg error-message" : "offscreed"} aria-live="assertive">{errMsg}</p>
                 <form onSubmit={handleSubmit} className='loginForm'>
                 <div className='txt_field'>
                     <label htmlFor='email'>Email:</label>
@@ -97,8 +95,8 @@ const Login = () => {
                         placeholder="Email"
                         ref = {userRef}
                         autoComplete = "off"
-                        onChange={(e) => setUser(e.target.value)}
-                        value = {user}
+                        onChange={(e) => setUserEmail(e.target.value)}
+                        value = {userEmail}
                         required
                     >
                     </input> 
