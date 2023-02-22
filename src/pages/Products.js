@@ -1,9 +1,39 @@
-import { motion } from "framer-motion"
-import "@google/model-viewer";
-import Couch from "../assets/objects/Couch.glb";
+import React, { useState, useContext, useEffect } from "react";
+import { motion } from "framer-motion";
+import ProductCard from "../components/ProductCard";
 
-export default function Pricing(){
+import { UserContext } from "../context/UserContext";
+
+import axios from '../api/axios';
+const PRODUCTS_URL = '/product/';
+
+function Products(){
+
+    const [products, setProducts] = useState([]);
+	const {user} = useContext(UserContext);
     
+    useEffect(() => {
+       getProducts();
+    }, [])
+    
+
+    const getProducts = async () => {
+        await axios.get(PRODUCTS_URL)
+        .then(result => {
+            setProducts(result.data.map((product) => {
+                return(
+                    <>
+                        <ProductCard product={product} key={product._id}/>
+                    </>
+                )
+            }))
+        })
+    }
+    
+
+    // console.log(getProducts) 
+    
+
     return (
         <motion.div 
             className="pricing"
@@ -12,11 +42,39 @@ export default function Pricing(){
             animate={{opacity: 1}}
             exit={{opacity: 0}}
             >
-                <h1>Products</h1>
-                <model-viewer
-                    src={Couch} 
-                    camera-controls
-                ></model-viewer>
+            <h1>Products</h1>
+            <div className="products-container">   
+                {products}
+            </div>
         </motion.div>
     )
 }
+
+// useEffect(() => {
+//         const products = axios.get(PRODUCTS_URL)
+//         .then(result => {
+//             setProducts(
+//                 result.data.map(product => {
+//                     return (
+//                         <>
+//                             <ProductCard key={product._id} product={product}/>
+//                         </>
+//                     )
+//                 })
+//             )
+//         })
+//         setProducts(products.data)
+//     })
+// function getProductData(id) {
+//     const productArray = async () => {await axios.get(PRODUCTS_URL)}
+//     let productData = productsArray.find(product => product.id === id);
+
+//     if (productData == undefined) {
+//         console.log("Product data does not exist for ID: " + id);
+//         return undefined;
+//     }
+
+//     return productData;
+// }
+
+export default Products;

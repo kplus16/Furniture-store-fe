@@ -14,10 +14,12 @@ body {
   margin: 0;
   background: linear-gradient(120deg,#daf0ff, #9f94a4);
   background-color: rgb(255, 252, 245);
-  overflow: hidden;
+  /* overflow: hidden; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -68,6 +70,23 @@ code {
 .nav li:hover{
     background-color: rgb(255, 243, 236);
 }
+
+.dropdown-menu{
+  top: 55px;
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  background: #000;
+  color: white;
+  padding-top: 15px;
+  display: none;
+}
+
+/* .nav .user-link:hover {
+  
+} */
+
+
 
 
 /* ===============error-message================= */
@@ -162,4 +181,28 @@ model-viewer {
   width: 600px;
   height: 600px;
   margin: 0 auto;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+
+
+/* ===============Products================= */
+
+.products-container{
+  display: grid;
+  grid-template-columns: auto auto auto;
+  width: 100%;
+  border: solid
+}
+
+.product-card{
+  text-align: center;
+  height: 400px;
+  width: 500px;
+  border: solid;
+  margin: 30px auto;
 }

@@ -2,6 +2,10 @@ import React, { useContext } from 'react';
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import { UserContext } from '../context/UserContext';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
+
 
 export default function Navbar() {
 
@@ -12,19 +16,29 @@ export default function Navbar() {
         <Link to="/" className="site-title">Furnication</Link>
         <ul className='grid-item'>
             <CustomLink to="/search">Search</CustomLink>
-            <CustomLink to="/pricing">Products</CustomLink>
-            <CustomLink to="/about">About</CustomLink>
+            <CustomLink to="/products">Products</CustomLink>
+            <CustomLink to="/about" >About</CustomLink>
         </ul>
         <ul className='grid-item'>
         {(!!user) ? 
-            <CustomLink to="/users/logout">Logout</CustomLink> 
+            <>
+            {/* <CustomLink to="/user" className='user-link'>
+                <FontAwesomeIcon icon={faUser} />
+            </CustomLink> */}
+                {/* <div className='dropdown-menu'> */}
+                    <CustomLink to="/users/logout">Logout</CustomLink> 
+                    <CustomLink to="/users/user">User</CustomLink> 
+                {/* </div> */}
+            </>
         :
             <>
                 <CustomLink to="/users/login">Login</CustomLink>
                 <CustomLink to="/users/signup">Signup</CustomLink>
             </>
         }
-            <CustomLink to="/cart">Cart</CustomLink>
+            <CustomLink to="/cart">
+                <FontAwesomeIcon icon={faCartShopping} />
+            </CustomLink>
         </ul>
     </nav>)
 }

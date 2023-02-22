@@ -41,10 +41,12 @@ const Login = () => {
                 {email : userEmail, password : pwd}
             );
             //console.log(JSON.stringify(response?.data));
-            console.log(response?.data);
+            // console.log(response?.data);
             const accessToken = response?.data?.accessToken;
-            const roles = response?.data?.userType;
-            setUser(response?.data?.email)
+            setUser({
+                email : response?.data?.email,
+                isAdmin : response?.data?.userType
+            })
             localStorage.setItem('accessToken', accessToken)
             //setUser(userEmail);
             setUserEmail('');
@@ -68,7 +70,7 @@ const Login = () => {
     }
 
     return (
-        <> {success ?(
+        <> {success ? (
             <motion.div 
                 className='center-success'
                 initial={{opacity: 0}}
@@ -90,7 +92,7 @@ const Login = () => {
                 <div className='txt_field'>
                     <label htmlFor='email'>Email:</label>
                     <input 
-                        type="text" 
+                        type="email" 
                         id="email" 
                         placeholder="Email"
                         ref = {userRef}

@@ -3,10 +3,13 @@ import { motion } from "framer-motion"
 import { useRef, useState, useEffect } from 'react';
 
 import axios from '../api/axios';
-const LOGIN_URL = '/user/login';
+const SIGNUP_URL = '/user/register';
 
 export default function Signup(){
     const navigate = useNavigate();
+
+    const userRef = useRef();
+    const errRef = useRef();
 
     const [ errMsg, setErrMsg ] = useState('');
     const [ success, setSuccess ] = useState(false);
@@ -22,11 +25,56 @@ export default function Signup(){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if(userPwd1 !== userPwd2){
+            setErrMsg("password do not match")
+            setUserEmail('');
+            setUserPwd1('');
+            setUserPwd2('');
+        }else{
+            try {
+            const response = await axios.post(SIGNUP_URL, 
+                {email : userEmail, password : userPwd1}
+            );
+            //const response = {email : userEmail, password : userPwd1}
+            //console.log(JSON.stringify(response?.data));
+            console.log(response);
+            //setUser(userEmail);
+            setUserEmail('');
+            setUserPwd1('');
+            setUserPwd2('');
+            setSuccess(true);
+            setTimeout(() => {
+                navigate("/users/login")
+            }, 2000)
+        } catch (error) {
+            if(!error?.response){
+                setErrMsg('No Server Response');
+            }else if (error.response?.status === 400) {
+                setErrMsg('User not found on database');
+            }else if (error.response?.status === 401) {
+                setErrMsg('Incorrect Password');
+            }else{
+                setErrMsg('Login Failed');
+            }
+            errRef.current.focus();
+        }
+        }
+        
         
         console.log()
     }
 
     return (
+        <> {success ? (
+            <motion.div 
+                className='center-success'
+                initial={{opacity: 0}}
+                animate={{opacity: 1}}
+                exit={{opacity: 0}}
+            >
+                <h1>Successfully Registered!</h1>
+            </motion.div>
+        ) : (
         <motion.div 
             className="center signup"
             initial={{opacity: 0}}
@@ -34,10 +82,11 @@ export default function Signup(){
             exit={{opacity: 0}}
         >
             <h1>Signup Here!</h1>
-            <form>
+            <p ref={errRef} className={errMsg ? "errmsg error-message" : "offscreed"} aria-live="assertive">{errMsg}</p>
+            <form onSubmit={handleSubmit}>
                 <label htmlFor="email">Email: </label>
                 <input 
-                    type="text" 
+                    type="email" 
                     id="email" 
                     placeholder="Email"
                     ref={userEmailRef}
@@ -71,5 +120,7 @@ export default function Signup(){
                 </div>
             </form>
         </motion.div>
+    )}
+    </>
     )
 }
