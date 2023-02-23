@@ -5,7 +5,7 @@ import About from '../pages/About';
 import Login from '../pages/Login';
 import Logout from '../pages/Logout';
 import Signup from '../pages/Signup';
-import Cart from '../components/Cart';
+import Cart from '../pages/Cart';
 import {  Route, Routes, useLocation } from "react-router-dom";
 
 import { AnimatePresence } from 'framer-motion'

@@ -7,8 +7,9 @@ import { UserContext } from "../context/UserContext";
 import axios from '../api/axios';
 const PRODUCTS_URL = '/product/';
 
-function Products(){
 
+function Products(){
+    
     const [products, setProducts] = useState([]);
 	const {user} = useContext(UserContext);
     
@@ -29,7 +30,7 @@ function Products(){
             }))
         })
     }
-    
+
 
     // console.log(getProducts) 
     
@@ -65,16 +66,6 @@ function Products(){
 //         })
 //         setProducts(products.data)
 //     })
-// function getProductData(id) {
-//     const productArray = async () => {await axios.get(PRODUCTS_URL)}
-//     let productData = productsArray.find(product => product.id === id);
 
-//     if (productData == undefined) {
-//         console.log("Product data does not exist for ID: " + id);
-//         return undefined;
-//     }
-
-//     return productData;
-// }
 
 export default Products;
