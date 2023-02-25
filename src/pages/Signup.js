@@ -91,26 +91,29 @@ export default function Signup(){
                     placeholder="Email"
                     ref={userEmailRef}
                     onChange={(e) => setUserEmail(e.target.value)}
-                    value={userEmail}>
+                    value={userEmail}
+                    required>
                 
                 </input>
-                <label htmlFor="email">Password: </label>
+                <label htmlFor="password1">Password: </label>
                 <input 
                     type="password" 
                     id="password1" 
                     placeholder="Password"
                     onChange={(e) => setUserPwd1(e.target.value)}
                     value={userPwd1}
+                    required
                     >
                     
                 </input>
-                <label htmlFor="email">Confirm Password: </label>
+                <label htmlFor="password2">Confirm Password: </label>
                 <input 
                     type="password" 
                     id="password2" 
                     placeholder="Password"
                     onChange={(e) => setUserPwd2(e.target.value)}
-                    value={userPwd2}>
+                    value={userPwd2}
+                    required>
                 </input>
                 <button type="submit" className='btn-sign-in'>
                         Sign Up

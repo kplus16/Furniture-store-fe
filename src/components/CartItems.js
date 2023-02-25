@@ -37,7 +37,7 @@ export default function CartItems({item}){
                         <td><h4>Subtotal: {subTotal}</h4></td>
                         <td>
                                 <button className="btn-qty" onClick={() => cart.removeOneFromCart(id)}>-</button>
-                                <input value={productQuantity} disabled="true"></input>
+                                <input className="cart-input" value={productQuantity} disabled="true"></input>
                                 <button className="btn-qty" onClick={() => cart.addOneToCart(id)}>+</button>
                         </td>
                         <td>

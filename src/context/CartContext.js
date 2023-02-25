@@ -83,12 +83,15 @@ export function CartProvider({children}) {
         )
     }
 
+    function emptyCart(){
+        setCartProducts([])
+    }
+
     
     function getTotalCost() {
         let totalCost = 0;
         cartProducts.map((cartItem) => {
-            const productData = Products.getProductData(cartItem.id);
-            totalCost += (productData.price * cartItem.quantity);
+            totalCost += (cartItem.price * cartItem.quantity);
         });
         return totalCost;
     }
@@ -99,7 +102,8 @@ export function CartProvider({children}) {
         addOneToCart,
         removeOneFromCart,
         deleteFromCart,
-        getTotalCost
+        getTotalCost,
+        emptyCart
     }
 
     return (

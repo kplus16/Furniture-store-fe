@@ -1,34 +1,38 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import { UserContext } from '../context/UserContext';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { CartContext } from '../context/CartContext';
+
+import DropdownProfile from './DropdownProfile';
 
 
 export default function Navbar() {
 
+    const cart = useContext(CartContext)
+
+    const productsCount = cart.items.reduce((sum, product) => sum + product.quantity, 0);
+
     const {user} = useContext(UserContext)
+
+    const [isOpen, setIsOpen] = useState(false)
     
     
     return (<nav className="nav">
         <Link to="/" className="site-title">Furnication</Link>
         <ul className='grid-item'>
-            <CustomLink to="/search">Search</CustomLink>
             <CustomLink to="/products">Products</CustomLink>
-            <CustomLink to="/about" >About</CustomLink>
         </ul>
         <ul className='grid-item'>
         {(!!user) ? 
             <>
-            {/* <CustomLink to="/user" className='user-link'>
-                <FontAwesomeIcon icon={faUser} />
-            </CustomLink> */}
-                {/* <div className='dropdown-menu'> */}
                     <CustomLink to="/users/logout">Logout</CustomLink> 
-                    <CustomLink to="/users/user">User</CustomLink> 
-                {/* </div> */}
+                    <a className="user-link" onClick={() => setIsOpen((prev) => !prev)}>
+                        <FontAwesomeIcon icon={faUser} size="lg"/>
+                    </a> 
             </>
         :
             <>
@@ -36,8 +40,23 @@ export default function Navbar() {
                 <CustomLink to="/users/signup">Signup</CustomLink>
             </>
         }
+        {(isOpen) ? 
+            <>
+                <DropdownProfile />
+            </>
+            :
+            <>
+
+            </>
+        }
             <CustomLink to="/cart">
-                <FontAwesomeIcon icon={faCartShopping} />
+                <FontAwesomeIcon icon={faCartShopping} size="lg"/>
+                {productsCount > 0 ? 
+                    <div className='cart-number'>{productsCount}</div>
+                    :
+                    <></>
+                }
+                
             </CustomLink>
         </ul>
     </nav>)

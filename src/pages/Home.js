@@ -19,12 +19,6 @@ export default function Home(){
             exit={{opacity: 0}}
             >
                 <h1>Home page</h1>
-                {/* {
-                    (user.isAdmin) ? 
-                    <h1>{user.email}</h1>
-                    :
-                    <h1>{user.isAdmin}</h1>
-                } */}
             <div className="3d-container left">
                 <model-viewer
                     src={Couch} 
