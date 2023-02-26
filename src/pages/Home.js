@@ -18,31 +18,34 @@ export default function Home(){
             animate={{opacity: 1}}
             exit={{opacity: 0}}
             >
-                <h1>Home page</h1>
-            <div className="3d-container left">
+            <h1>Home page</h1>
+            <div className="threedimension-container left">
                 <model-viewer
                     src={Couch} 
-                    
                     camera-controls
                 >
                 </model-viewer>
+                <h1>This is a Couch Buy now</h1>
             </div>
-            <div className="3d-container right">
-            
+            <div className="threedimension-container right">
                 <model-viewer
                     src={Table} 
                     camera-orbit="90deg"
                     camera-controls
                 >
                 </model-viewer>
+                
+                <h1>This is a Table Buy now</h1>
             </div>
-            <div className="3d-container left">
+            <div className="threedimension-container left">
                 <model-viewer
                     src={Chair} 
                     camera-orbit="180deg"
                     camera-controls
                 >
                 </model-viewer>
+                
+                <h1>This is a Chair Buy now</h1>
             </div>
         </motion.div>
     )

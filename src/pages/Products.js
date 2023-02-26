@@ -1,12 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
 import { motion } from "framer-motion";
 
-
+//icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
+//product card
 import ProductCard from "../components/ProductCard";
+
+//user context
 import { UserContext } from "../context/UserContext";
+
+import CreateProduct from "../components/Modals/CreateProduct";
 
 import axios from '../api/axios';
 const PRODUCTS_URL = '/product/';
@@ -14,12 +19,14 @@ const PRODUCTS_URL = '/product/';
 
 function Products(){
     
-    const [products, setProducts] = useState([]);
-    const [query, setQuery] = useState("");
-    const [isActive, setIsActive] = useState(true)
-    const [filteredProducts, setFilteredProducts] = useState([])
 	const {user} = useContext(UserContext);
-    
+    const [products, setProducts] = useState([]); // store all products
+    const [query, setQuery] = useState(""); //for search bar
+    const [isActive, setIsActive] = useState(true);
+    const [filteredProducts, setFilteredProducts] = useState([]);
+
+    const [ isNewProductOpen, setIsNewProductOpen ] = useState(false)
+
     useEffect(() => {
        getProducts();
     }, [])
@@ -27,10 +34,19 @@ function Products(){
     const getProducts = async () => {
         await axios.get(PRODUCTS_URL)
         .then(result => {
+            if(user.isAdmin){
                 setFilteredProducts(result.data.filter(product => 
                     product.isActive === true
                 ));
                 setProducts(result.data);
+            }else{
+                setFilteredProducts(result.data.filter(product => 
+                    product.isActive === true
+                ));
+                setProducts(result.data.filter(product => 
+                    product.isActive === true
+                ));
+            } 
             }
         )
     }
@@ -62,10 +78,6 @@ function Products(){
             setFilteredProducts(products)
         }
     }
-
-    
-
-
     // console.log(getProducts) 
     
 
@@ -84,13 +96,18 @@ function Products(){
             </div>
             </div>
             {user.isAdmin ? 
-                <div className="toggle-switch">
-                <h3>Toggle to see InActive Products</h3>
-                    <label class="switch">
+                <>
+                    <div className="toggle-switch">
+                    <h3>Toggle to see InActive Products</h3>
+                    <label className="switch">
                         <input type="checkbox" onClick={() => setIsActive((prev) => !prev)}></input>
-                        <span class="slider round"></span>
+                        <span className="slider round"></span>
                     </label>
                 </div>
+                <div className="toggle-switch">
+                    <button className="btn-addnewproduct" onClick={() => setIsNewProductOpen(true)}>Add New Product</button>
+                </div>
+                </>
                 :
                 <></>
             }
@@ -104,6 +121,7 @@ function Products(){
                    ) 
                 })}
             </div>
+            <CreateProduct open={isNewProductOpen} onClose={() => setIsNewProductOpen(false)}></CreateProduct>
         </motion.div>
     )
 }

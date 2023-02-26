@@ -100,11 +100,20 @@ code {
   
 } */
 
+/* ===============Home================= */
+.threedimension-container {
+  display: flex;
+}
+
 /* ===============toggle-sliders================= */
 .toggle-switch{
   display: flex;
   justify-content: end;
 
+}
+.toggle-switch button{
+  margin-top: 30px;
+  margin-right: 8%;
 }
 .toggle-switch h3{
   position: relative;
@@ -171,6 +180,19 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.btn-addnewproduct {
+  position: relative;
+  height: 50px;
+  padding: 15px 30px;
+  background-color: #3988d7;
+  color: white;
+  border: none;
+}
+.btn-addnewproduct:hover {
+  transition: 0.2s;
+  background-color: #3e8e41
 }
 
 
@@ -244,7 +266,7 @@ input:checked + .slider:before {
 .btn-sign-in {
  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
  font-size: 17px;
- padding: 1em 2.7em;
+ padding: 1em 2em;
  font-weight: 500;
  background: #1F2937;
  color: white;
@@ -254,9 +276,10 @@ input:checked + .slider:before {
  border-radius: 0.6em;
  margin-top: 20px;
 }
+
 .btn-sign-in:hover {
-  transition: 0.5s;
-  transform: scale(1.1);
+  transition: 0.2s;
+  transform: scale(1.05);
   background: black;
 }
 .signup-link {
@@ -292,10 +315,9 @@ model-viewer {
   background-color: white;
 }
 .product-card:hover{
-  transition: 0.2s;
+  transition: 0.05s;
   border: solid;
   border-color: #ee4d2d;
-  transform: scale(1.05);
 }
 .search-bar-container {
   display: flex;
@@ -319,7 +341,7 @@ model-viewer {
   transition: width 0.4s ease-in-out;
 }
 .search-input:focus {
-  width: 130px;
+  width: 180px;
 }
 .text-left {
   text-align: left;
@@ -448,3 +470,69 @@ model-viewer {
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
+
+
+/* ===============Modal================= */
+
+.modal, .overlay {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+}
+
+.overlay {
+    background: rgba(49,49,49,0.8);
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1.4;
+    background: #f1f1f1;
+    padding: 14px 28px;
+    border-radius: 3px;
+    max-width: 600px;
+    min-width: 400px;
+    max-height: 600px;
+    min-height: 300px;
+}
+
+.modal-content input{
+  width: 100%;
+}
+
+.btn-close {
+  margin-top: 2px;
+  margin-right: 5px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.update-container{
+  display: flex;
+  justify-content: center;
+}
+.btn-update {
+  position: relative;
+}
+
+.modal-content-product {
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1.4;
+    background: #f1f1f1;
+    padding: 14px 28px;
+    border-radius: 3px;
+    width: fit-content;
+    height: fit-content;
+}
+

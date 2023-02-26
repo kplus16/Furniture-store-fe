@@ -42,7 +42,7 @@ export default function Navbar() {
         }
         {(isOpen) ? 
             <>
-                <DropdownProfile />
+                <DropdownProfile onClose={() => setIsOpen(false)}/>
             </>
             :
             <>

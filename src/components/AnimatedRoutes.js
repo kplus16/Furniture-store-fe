@@ -6,6 +6,7 @@ import Login from '../pages/Login';
 import Logout from '../pages/Logout';
 import Signup from '../pages/Signup';
 import Cart from '../pages/Cart';
+import Orders from "../pages/Order";
 import {  Route, Routes, useLocation } from "react-router-dom";
 
 import { AnimatePresence } from 'framer-motion'
@@ -23,6 +24,7 @@ export default function AnimatedRoutes() {
                 <Route path="/users/login" element={<Login />}></Route>
                 <Route path="/users/signup" element={<Signup />}></Route>
                 <Route path="/cart" element={<Cart />}></Route>
+                <Route path="/previousorders" element={<Orders />}></Route>
             </Routes>
         </AnimatePresence>
     )

@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useRef, useState, useEffect, useContext} from 'react';
 import { motion } from "framer-motion"
+import { CartContext } from '../context/CartContext';
 
 //import context
 import { UserContext } from '../context/UserContext';
@@ -18,6 +19,8 @@ const Login = () => {
 
     const userRef = useRef();
     const errRef = useRef();
+
+    const cart = useContext(CartContext)
 
     //react state
     const [userEmail, setUserEmail] = useState('');
@@ -46,7 +49,10 @@ const Login = () => {
             setUser({
                 email : response?.data?.email,
                 isAdmin : response?.data?.userType
-            })
+            });
+            if(response?.data?.userType){
+                cart.emptyCart();
+            }
             localStorage.setItem('accessToken', accessToken)
             //setUser(userEmail);
             setUserEmail('');
@@ -54,7 +60,7 @@ const Login = () => {
             setSuccess(true);
             setTimeout(() => {
                 navigate("/")
-            }, 2000)
+            }, 1000)
         } catch (error) {
             if(!error?.response){
                 setErrMsg('No Server Response');
