@@ -16,7 +16,7 @@ export default function OrderItems({order}){
         }))
     }, [])
 
-    console.log(productNames)
+    //console.log(productNames)
     return (
         <>
             <table>

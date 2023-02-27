@@ -32,19 +32,70 @@ export default function ProductCard({product}){
 
 
     const archive = async () => {
-        try {
-            const response = await axios.put(ARCHIVE_PRODUCT_URL+_id, null,  config)
-            console.log(response);
-        } catch (error) {
-            console.log(error)
+        if(isActive){
+            MySwal.fire({
+                        title: `Are you sure you want to archive ${name}?`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        cancelButtonText: "Cancel",
+                        confirmButtonText: 'Archive'
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        MySwal.fire({
+                            title: <strong>Archived {name}</strong>,
+                            icon: 'success'
+                        });
+                         try {
+                            const response = axios.put(ARCHIVE_PRODUCT_URL+_id, null,  config)
+                            console.log(response);
+                        } catch (error) {
+                            console.log(error)
+                        }
+                    }else if (result.dismiss === Swal.DismissReason.cancel) {
+                        // MySwal.fire(
+                        //     'Cancelled',
+                        // )
+                    }
+                    })
+        }else{
+            MySwal.fire({
+                        title: `Are you sure you want to unarchive ${name}?`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        cancelButtonText: "Cancel",
+                        confirmButtonText: 'Un-archive'
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        MySwal.fire({
+                            title: <strong>UnArchived {name}</strong>,
+                            icon: 'success'
+                        });
+                         try {
+                            const response = axios.put(ARCHIVE_PRODUCT_URL+_id, null,  config)
+                            console.log(response);
+                        } catch (error) {
+                            console.log(error)
+                        }
+                    }else if (result.dismiss === Swal.DismissReason.cancel) {
+                        // MySwal.fire(
+                        //     'Cancelled',
+                        // )
+                    }
+                    })
         }
+        
+        
     }
-
+     //
     return(
         <>
-            <div className="product-card" onClick={() => setIsDetailsOpen(true)}>
+            <div className="product-card">
                     <h1>{name}</h1>
-                    <img src='https://via.placeholder.com/400' alt={name} width="400" height="400"></img>
+                    <img src='https://via.placeholder.com/400' alt={name} width="400" height="400" onClick={() => setIsDetailsOpen(true)}></img>
                     <h2>Price: {price}</h2>
                     <div className="card-btn-container">
                     {user.isAdmin ?

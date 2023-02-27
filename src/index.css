@@ -101,8 +101,21 @@ code {
 } */
 
 /* ===============Home================= */
-.threedimension-container {
+.home-section {
   display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+model-viewer {
+  width: 1000px;
+  height: 600px;
+  margin: 0 auto;
+  background-color: white;
+}
+
+.product-link:visited {
+  color: black;
 }
 
 /* ===============toggle-sliders================= */
@@ -286,16 +299,12 @@ input:checked + .slider:before {
   margin-top: 20px;
 }
 
-model-viewer {
-  width: 600px;
-  height: 600px;
-  margin: 0 auto;
-}
+
 .left {
   float: left;
 }
 .right {
-  float: right;
+  text-align: right;
 }
 
 

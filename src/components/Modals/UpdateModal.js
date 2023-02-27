@@ -5,6 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { useState } from "react";
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
 import axios from '../../api/axios';
 const UPDATE_PRODUCT_URL = '/product/updateProduct/';
 
@@ -12,6 +15,7 @@ const UPDATE_PRODUCT_URL = '/product/updateProduct/';
 export default function UpdateModal({open,  onClose, product}){
 
     
+    const MySwal = withReactContent(Swal)
 
     const {name, price, _id, description, isActive} = product;
 
@@ -32,7 +36,13 @@ export default function UpdateModal({open,  onClose, product}){
     const update = async () => {
         try {
             const response = await axios.put(UPDATE_PRODUCT_URL+_id, body, config)
-            console.log(response);
+            MySwal.fire({
+                    title: <strong>Successfully Updated {newName}!</strong>,
+                    html: <i></i>,
+                    icon: 'success'
+            });
+            onClose();
+            //console.log(response);
         } catch (error) {
             console.log(error)
         }

@@ -46,25 +46,44 @@ export default function Cart(){
                 })
             }else if(productsCount === 0){
                 MySwal.fire({
-                title: <strong>Your cart is empty!</strong>,
-                html: <i>Please, add something first!</i>,
-                icon: 'error'
-            })
+                    title: <strong>Your cart is empty!</strong>,
+                    html: <i>Please, add something first!</i>,
+                    icon: 'error'
+                })
             }else{
-                try {
-                    const response = await axios.post(CREATE_ORDER_URL, checkoutBody, config)
                     MySwal.fire({
-                        title: <strong>Checked Out!</strong>,
-                        html: <i>Thank you for shopping with us!</i>,
-                        icon: 'success'
-                    });
-                    console.log(response);
-                    cart.emptyCart();
-                } catch (error) {
-                    if(!error?.response){
-                        setErrMsg('No Server Response');
+                        title: 'Are you sure you want to checkout?',
+                        text: `Your total is ${totalCost.toFixed(2)}!`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        cancelButtonText: "Continue Shopping",
+                        confirmButtonText: 'Yes, continue with checkout!'
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        MySwal.fire({
+                            title: <strong>Checked Out!</strong>,
+                            html: <i>Thank you for shopping with us!</i>,
+                            icon: 'success'
+                        });
+                         try {
+                            const response = axios.post(CREATE_ORDER_URL, checkoutBody, config)
+                            //console.log(response);
+                            cart.emptyCart();
+                        } catch (error) {
+                            if(!error?.response){
+                                setErrMsg('No Server Response');
+                            }
+                        }
+                    }else if (result.dismiss === Swal.DismissReason.cancel) {
+                        // MySwal.fire(
+                        //     'Cancelled',
+                        // )
                     }
-                }
+                    })
+
+               
                 
             }
         }else{

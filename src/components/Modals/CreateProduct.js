@@ -5,11 +5,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { useState } from "react";
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+
 import axios from '../../api/axios';
 const CREATE_PRODUCT_URL = '/product/createproduct';
 
 
 export default function CreateProduct({open,  onClose}){
+
+    
+    const MySwal = withReactContent(Swal)
 
     const [ newName, setNewName ] = useState("")
     const [ newPrice, setNewPrice ] = useState("")
@@ -28,10 +35,16 @@ export default function CreateProduct({open,  onClose}){
     const createNewProduct = async () => {
         try {
             const response = await axios.post(CREATE_PRODUCT_URL, body, config)
-            // if(response){
-
-            // }
             console.log(response);
+            MySwal.fire({
+                    title: <strong>Successfully Added {newName}!</strong>,
+                    html: <i></i>,
+                    icon: 'success'
+            });
+            setNewName('');
+            setNewPrice('');
+            setNewDescription('');
+            onClose();
         } catch (error) {
             console.log(error)
         }
