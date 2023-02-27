@@ -63,7 +63,7 @@ export default function CreateProduct({open,  onClose}){
                     <h4>Name: </h4>
                     <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)} required></input>
                     <h4>Price: </h4>
-                    <input type="number" value={newPrice} onChange={(e) => setNewPrice(e.target.value)} required></input>
+                    <input type="number" min="1" value={newPrice} onChange={(e) => setNewPrice(e.target.value)} required></input>
                     <h4>Description: </h4>
                     <input type="text" value={newDescription} onChange={(e) => setNewDescription(e.target.value)} required></input>
                     <h4>Image: </h4>
